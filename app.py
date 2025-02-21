@@ -11,7 +11,6 @@ st.title("🎬 Auto Video Trimmer (60-sec Clips)")
 st.write("Upload a large video, and it will be automatically split into 1-minute clips.")
 
 uploaded_file = st.file_uploader("Upload a video", type=["mp4", "avi", "mov", "mkv"])
-video_path = None
 
 if uploaded_file:
     video_path = os.path.join(UPLOAD_FOLDER, uploaded_file.name)
@@ -38,7 +37,7 @@ if uploaded_file:
         start_time = i * 60
         output_clip = os.path.join(OUTPUT_FOLDER, f"clip_{i+1}.mp4")
 
-        # Trim using ffmpeg-python
+        # Trim using ffmpeg
         subprocess.run(
             ["ffmpeg", "-y", "-i", video_path, "-ss", str(start_time), "-t", "60", "-c:v", "copy", "-c:a", "copy", output_clip],
             stdout=subprocess.PIPE,
